@@ -1,0 +1,6 @@
+framework module Pods_Bus_Le_Pecq {
+  umbrella header "Pods-Bus Le Pecq-umbrella.h"
+
+  export *
+  module * { export * }
+}
