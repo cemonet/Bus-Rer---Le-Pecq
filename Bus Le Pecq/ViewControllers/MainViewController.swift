@@ -1,5 +1,5 @@
 //
-//  ViewController.swift
+//  MainViewController.swift
 //  Bus Le Pecq
 //
 //  Created by EMONET Corentin on 05/09/2018.
@@ -8,43 +8,7 @@
 
 import UIKit
 
-class ViewController: UIViewController {
-    enum Categorie {
-        case paris
-        case cergy
-        case rer
-        
-        var name: String {
-            switch self {
-            case .paris: return "Paris"
-            case .cergy: return "Cergy"
-            case .rer: return "RER"
-            }
-        }
-        
-        var itineraires: [Itineraire] {
-            switch self {
-            case .paris:
-                return [
-                    .brossoletteAller,
-                    .vesinetLePecqRetour
-                ]
-            case .cergy:
-                return [
-                    .saintGermainEnlayeAller,
-                    .cergyPrefectureRetour,
-                    .neuvilleUniversiteRetour
-                ]
-            case .rer:
-                return [
-                    .vesinetLePecqAllerRer,
-                    .saintGermainEnLayeAllerRer,
-                    .gareDeLyonRetourRer
-                ]
-            }
-        }
-    }
-    
+class MainViewController: UIViewController {
     private let segmentedControl: UISegmentedControl = UISegmentedControl()
     private let tableView: UITableView = UITableView(frame: .zero, style: UITableViewStyle.grouped)
     
@@ -69,8 +33,6 @@ class ViewController: UIViewController {
         setupStyle()
         setupLayout()
         
-        loadItineraires()
-        
         Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { [weak self] _ in
             self?.tableView.reloadData()
         }
@@ -82,6 +44,8 @@ class ViewController: UIViewController {
     }
     
     private func setupStyle() {
+        view.backgroundColor = .white
+        
         tableView.register(PassageTableViewCell.self, forCellReuseIdentifier: "passage")
         tableView.dataSource = self
         tableView.delegate = self
@@ -112,12 +76,6 @@ class ViewController: UIViewController {
         ])
     }
     
-    private func loadItineraires() {
-        for itineraire in categorie.itineraires where passages[itineraire] == nil {
-            loadPassages(for: itineraire)
-        }
-    }
-    
     private func loadPassages(for itineraire: Itineraire) {
         API.shared.passages(for: itineraire) { [weak self] success, passages in
             guard let strongSelf = self else { return }
@@ -139,11 +97,10 @@ class ViewController: UIViewController {
     
     @objc private func didChangeSegmented(sender: UISegmentedControl) {
         tableView.reloadData()
-        loadItineraires()
     }
 }
 
-extension ViewController: UITableViewDataSource {
+extension MainViewController: UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
         return categorie.itineraires.count
     }
@@ -168,7 +125,7 @@ extension ViewController: UITableViewDataSource {
     }
 }
 
-extension ViewController: UITableViewDelegate {
+extension MainViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let view: UIView = UIView()
         
@@ -189,7 +146,6 @@ extension ViewController: UITableViewDelegate {
             newButton.addTarget(self, action: #selector(didTapReload), for: .touchUpInside)
             newButton.translatesAutoresizingMaskIntoConstraints = false
             newButton.tag = section
-            newButton.isHidden = true
             buttonOpt = newButton
             buttons[categorie.itineraires[section]] = newButton
         }
@@ -218,6 +174,8 @@ extension ViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let itineraire: Itineraire = categorie.itineraires[indexPath.section]
+        guard itineraire.transport == .bus else { return }
+        
         let horrairesVC: HorrairesViewController = HorrairesViewController(itineraire: itineraire)
         present(horrairesVC, animated: true, completion: nil)
     }

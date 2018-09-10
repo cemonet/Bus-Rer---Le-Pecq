@@ -40,8 +40,8 @@ final class PassageTableViewCell: UITableViewCell {
             busLabel.text = rer.destination
             heureLabel.text = rer.infos
             
-            restantLabel.textColor = .blue
-            busLabel.textColor = .blue
+            restantLabel.textColor = .purple
+            busLabel.textColor = .red
             heureLabel.textColor = .blue
         }
     }
@@ -54,6 +54,19 @@ final class PassageTableViewCell: UITableViewCell {
     
     private func setupStyle() {
         selectionStyle = .none
+        
+        restantLabel.setContentCompressionResistancePriority(.required, for: .horizontal)
+        restantLabel.setContentHuggingPriority(.defaultHigh, for: .horizontal)
+        
+        busLabel.adjustsFontSizeToFitWidth = true
+        busLabel.minimumScaleFactor = 0.1
+        busLabel.font = UIFont.systemFont(ofSize: 16)
+        busLabel.textAlignment = .center
+        busLabel.setContentHuggingPriority(.defaultLow, for: .horizontal)
+        busLabel.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
+        
+        heureLabel.setContentCompressionResistancePriority(.required, for: .horizontal)
+        heureLabel.setContentHuggingPriority(.defaultHigh, for: .horizontal)
     }
     
     private func setupLayout() {
@@ -65,8 +78,9 @@ final class PassageTableViewCell: UITableViewCell {
             restantLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 10),
             restantLabel.centerYAnchor.constraint(equalTo: centerYAnchor),
             
-            busLabel.centerXAnchor.constraint(equalTo: centerXAnchor),
             busLabel.centerYAnchor.constraint(equalTo: centerYAnchor),
+            busLabel.leadingAnchor.constraint(equalTo: restantLabel.trailingAnchor, constant: 20),
+            busLabel.trailingAnchor.constraint(equalTo: heureLabel.leadingAnchor, constant: -20),
             
             heureLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -10),
             heureLabel.centerYAnchor.constraint(equalTo: centerYAnchor)
