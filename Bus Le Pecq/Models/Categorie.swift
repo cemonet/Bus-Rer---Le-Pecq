@@ -26,6 +26,7 @@ enum Categorie {
         case .paris:
             return [
                 .brossoletteAller,
+                .republiqueAller,
                 .vesinetLePecqRetour
             ]
         case .cergy:

@@ -16,6 +16,7 @@ enum Direction: String {
 enum Station: String {
     case brossolette = "50012195"
     case vesinetLePecq = "50012502"
+    case republique = "50012435"
     case saintGermainEnLayeTiers = "50018116"
     case cergyPrefecture = "50008377"
     case neuvilleUniversite = "50018230"

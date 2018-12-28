@@ -10,6 +10,7 @@ import Foundation
 
 enum Itineraire {
     case brossoletteAller
+    case republiqueAller
     case vesinetLePecqRetour
     case saintGermainEnlayeAller
     case cergyPrefectureRetour
@@ -21,6 +22,7 @@ enum Itineraire {
     var name: String {
         switch self {
         case .brossoletteAller: return "Aller (Brossolette)"
+        case .republiqueAller: return "Aller (Republique)"
         case .vesinetLePecqRetour: return "Retour (Vesinet Le Pecq)"
         case .saintGermainEnlayeAller: return "Aller (Saint Germain En Laye)"
         case .cergyPrefectureRetour: return "Retour (Cergy Prefecture)"
@@ -34,6 +36,7 @@ enum Itineraire {
     var transport: Transport {
         switch self {
         case .brossoletteAller: return .bus
+        case .republiqueAller: return .bus
         case .vesinetLePecqRetour: return .bus
         case .saintGermainEnlayeAller: return .bus
         case .cergyPrefectureRetour: return .bus
@@ -47,6 +50,7 @@ enum Itineraire {
     var direction: Direction? {
         switch self {
         case .brossoletteAller: return .aller
+        case .republiqueAller: return .aller
         case .vesinetLePecqRetour: return .retour
         case .saintGermainEnlayeAller: return .aller
         case .cergyPrefectureRetour: return .retour
@@ -60,6 +64,7 @@ enum Itineraire {
     var line: Line {
         switch self {
         case .brossoletteAller: return .bus21
+        case .republiqueAller: return .bus21
         case .vesinetLePecqRetour: return .bus21
         case .saintGermainEnlayeAller: return .bus27
         case .cergyPrefectureRetour: return .bus27
@@ -73,6 +78,7 @@ enum Itineraire {
     var station: Station {
         switch self {
         case .brossoletteAller: return .brossolette
+        case .republiqueAller: return .republique
         case .vesinetLePecqRetour: return .vesinetLePecq
         case .saintGermainEnlayeAller: return .saintGermainEnLayeTiers
         case .cergyPrefectureRetour: return .cergyPrefecture
@@ -86,6 +92,7 @@ enum Itineraire {
     var destination: Station? {
         switch self {
         case .brossoletteAller: return .vesinetLePecq
+        case .republiqueAller: return .vesinetLePecq
         case .vesinetLePecqRetour: return .brossolette
         case .saintGermainEnlayeAller: return .neuvilleUniversite
         case .cergyPrefectureRetour: return .saintGermainEnLayeTiers
@@ -99,6 +106,7 @@ enum Itineraire {
     var destinationRer: Destination? {
         switch self {
         case .brossoletteAller: return nil
+        case .republiqueAller: return nil
         case .vesinetLePecqRetour: return nil
         case .saintGermainEnlayeAller: return nil
         case .cergyPrefectureRetour: return nil
